@@ -8,10 +8,8 @@ type FilterEstiloProps = {
 }
 
 const FilterEstilo = (props: FilterEstiloProps) => {
-
     const { setFilterEstilo } = props;
-    const { result, loading }: FilterTypes = useGetProductField()
-    //console.log(result)
+    const { result, loading }: FilterTypes = useGetProductField();
 
     return (
         <div className="my-5">
@@ -19,12 +17,12 @@ const FilterEstilo = (props: FilterEstiloProps) => {
             {loading && result == null && (
                 <p>Cargando estilo... </p>
             )}
-            <RadioGroup onValueChange={(value)=> setFilterEstilo(value)}>
+            <RadioGroup onValueChange={(value) => setFilterEstilo(value)}>
                 <div key="todos" className="flex items-center space-x-2">
                     <RadioGroupItem value="" id="todos" />
                     <Label htmlFor="todos">Todos</Label>
                 </div>
-                {result !== null && result.schema.attributes.estilo.enum.map((estilo: string) => (
+                {result !== null && result.schema?.attributes?.estilo?.enum?.map((estilo: string) => (
                     <div key={estilo} className="flex items-center space-x-2">
                         <RadioGroupItem value={estilo} id={estilo} />
                         <Label htmlFor={estilo}>{estilo}</Label>
