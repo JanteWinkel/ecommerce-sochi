@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useState } from "react";
 import { useParams } from "next/navigation";
@@ -22,12 +22,9 @@ export default function Page() {
 
   const [filterEstilo, setFilterEstilo] = useState<string>("");
 
-  const filteredProducts: ProductType[] =
-    !loading
-      ? filterEstilo === ""
-        ? products
-        : products.filter((product: ProductType) => product.attributes.estilo === filterEstilo)
-      : [];
+  const filteredProducts: ProductType[] = filterEstilo === ""
+    ? products
+    : products.filter((product: ProductType) => product.attributes.estilo === filterEstilo);
 
   return (
     <div className="max-w-6xl py-4 mx-auto sm:py-16 sm:px-24">
@@ -47,11 +44,9 @@ export default function Page() {
               <SkeletonSchema grid={3} />
             </div>
           )}
-          {!loading &&
-            filteredProducts.length > 0 &&
-            filteredProducts.map((product: ProductType) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
+          {!loading && filteredProducts.length > 0 && filteredProducts.map((product: ProductType) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
           {!loading && filteredProducts.length === 0 && (
             <p>No hay productos con este filtro.</p>
           )}
