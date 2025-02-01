@@ -13,23 +13,30 @@ interface LovedItemProductProps {
 }
 
 const LovedItemProduct = (props: LovedItemProductProps) => {
-    const { product } = props
-    const { removeLovedItem } = useLovedProducts()
-    const { addItem } = useCart()
+    const { product } = props;
+    const { removeLovedItem } = useLovedProducts();
+    const { addItem } = useCart();
 
     const addToCheckout = () => {
-        addItem(product)
-        removeLovedItem(product.id)
-    }
+        addItem(product);
+        removeLovedItem(product.id);
+    };
+
+    // Accediendo a las propiedades correctamente
+    const productName = product.attributes.productName;
+    const price = product.attributes.price;
+    const estilo = product.attributes.estilo;
+    const categoryName = product.attributes.category.data.attributes.categoryName;
+    const imageUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL}${product.attributes.images.data[0]?.attributes.url}`;
 
     return (
         <li className="flex py-6 border-b">
-             <ProductImageMiniature slug={product.slug} url={product.images[0].url}/>
+            <ProductImageMiniature slug={product.attributes.slug} url={imageUrl} />
             <div className="flex justify-between flex-1 px-6">
                 <div>
-                    <h2 className="text-lg font-bold">{product.productName}</h2>
-                    <p className="font-bold">{formatPrice(product.price)}</p>
-                    <ProductCategoryEstilo categoryName={product.category.categoryName} estilo={product.estilo}/>
+                    <h2 className="text-lg font-bold">{productName}</h2>
+                    <p className="font-bold">{formatPrice(price)}</p>
+                    <ProductCategoryEstilo categoryName={categoryName} estilo={estilo} />
                     
                     <Button className="mt-5 rounded-full" onClick={addToCheckout}>Añadir al carrito🛒</Button>
                 </div>
@@ -38,7 +45,6 @@ const LovedItemProduct = (props: LovedItemProductProps) => {
                         <X size={20} onClick={() => removeLovedItem(product.id)} />
                     </button>
                 </div>
-
             </div>
         </li>
     );

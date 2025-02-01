@@ -11,26 +11,31 @@ interface CartItemProps {
 }
 
 const CartItem = (props: CartItemProps) => {
+    const { product } = props;
+    const { removeItem } = useCart();
 
-    const { product } = props
-    const { removeItem } = useCart()
+    // Accede a la imagen y la categoría correctamente según la estructura de ProductType
+    const imageUrl = product.attributes.images.data[0]?.attributes.url;
+    const categoryName = product.attributes.category.data.attributes.categoryName;
 
     return (
-        <li className=" flex py-6 border-b">
-            <ProductImageMiniature slug={product.slug} url={product.images[0].url}/>
+        <li className="flex py-6 border-b">
+            <ProductImageMiniature slug={product.attributes.slug} url={imageUrl} />
 
             <div className="flex justify-between flex-1 px-6">
                 <div>
-                    <h2 className="text-lg font-bold">{product.productName}</h2>
-                    <p className="font-bold">{formatPrice(product.price)}</p>
-                    <ProductCategoryEstilo categoryName={product.category.categoryName} estilo={product.estilo}/>
+                    <h2 className="text-lg font-bold">{product.attributes.productName}</h2>
+                    <p className="font-bold">{formatPrice(product.attributes.price)}</p>
+                    <ProductCategoryEstilo categoryName={categoryName} estilo={product.attributes.estilo} />
                 </div>
                 <div>
-                    <button className={cn("rounded-full flex items-center justify-center bg-white dark:bg-black border shadow-md p-1 hover:scale-110 transition")}>
-                        <X size={20} onClick={() => removeItem(product.id)} />
+                    <button
+                        className={cn("rounded-full flex items-center justify-center bg-white dark:bg-black border shadow-md p-1 hover:scale-110 transition")}
+                        onClick={() => removeItem(product.id)}
+                    >
+                        <X size={20} />
                     </button>
                 </div>
-
             </div>
         </li>
     );
