@@ -5,7 +5,7 @@ type FiltersControlsCategoryProps = {
 }
 
 const FiltersControlsCategory = (props: FiltersControlsCategoryProps) => {
-    const { setFilterEstilo } = props
+    const { setFilterEstilo } = props;
 
     return (
         <div className="sm:w-[350px] sm:mt-5 p-6">
