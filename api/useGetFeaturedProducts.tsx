@@ -3,10 +3,50 @@ import { useEffect, useState } from "react";
 // Definimos la interfaz para un Producto
 interface Product {
   id: number;
-  name: string;
-  price: number;
-  isFeatured: boolean;
-  // Puedes agregar otros campos que correspondan con la respuesta de tu API
+  attributes: {
+    productName: string;
+    slug: string;
+    description: string;
+    active: boolean;
+    estilo: string;
+    isFeatured: boolean;
+    price: number;
+    images: {
+      data: {
+        id: number;
+        attributes: {
+          url: string;
+        };
+      }[];
+    };
+    category: {
+      data: {
+        id: number;
+        attributes: {
+          categoryName: string;
+          slug: string | null;
+          createdAt: string;
+          updatedAt: string;
+          publishedAt: string;
+        };
+      };
+    };
+    departamento?: {
+      data: {
+        id: number;
+        attributes: {
+          departamentoName: string;
+          slug: string | null;
+          createdAt: string;
+          updatedAt: string;
+          publishedAt: string;
+        };
+      };
+    };
+    createdAt: string;
+    updatedAt: string;
+    publishedAt: string;
+  };
 }
 
 export function useGetFeaturedProducts() {
