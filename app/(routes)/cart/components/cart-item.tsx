@@ -7,7 +7,7 @@ import { ProductType } from "@/types/product";
 import { X } from "lucide-react";
 
 interface CartItemProps {
-    product: ProductType
+    product: ProductType;
 }
 
 const CartItem = (props: CartItemProps) => {
@@ -15,8 +15,12 @@ const CartItem = (props: CartItemProps) => {
     const { removeItem } = useCart();
 
     // Accede a la imagen y la categoría correctamente según la estructura de ProductType
-    const imageUrl = product.attributes.images.data[0]?.attributes.url;
-    const categoryName = product.attributes.category.data.attributes.categoryName;
+    const imageUrl = product.attributes.images?.data?.[0]?.attributes?.url 
+        ? (product.attributes.images.data[0].attributes.url.startsWith("http")
+            ? product.attributes.images.data[0].attributes.url
+            : `${process.env.NEXT_PUBLIC_BACKEND_URL}${product.attributes.images.data[0].attributes.url}`)
+        : "/path/to/default-image.jpg"; // Imagen por defecto si no hay imagen
+    const categoryName = product.attributes.category?.data?.attributes?.categoryName ?? "Sin categoría";
 
     return (
         <li className="flex py-6 border-b">
