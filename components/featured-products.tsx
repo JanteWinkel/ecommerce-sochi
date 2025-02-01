@@ -15,7 +15,7 @@ import ProductCategoryEstilo from "./shared/product-category-estilo";
 import Image from "next/image";
 
 const FeaturedProducts = () => {
-    const { result, loading }: ResponseType = useGetFeaturedProducts();
+    const { result, loading, error }: ResponseType = useGetFeaturedProducts();
     const router = useRouter();
     const { addItem } = useCart();
 
@@ -27,9 +27,15 @@ const FeaturedProducts = () => {
         );
     }
 
+    if (error) {
+        return <p>Error al cargar los productos: {error}</p>;
+    }
+
     if (!result || !Array.isArray(result)) {
         return <p>No se encontraron productos destacados.</p>;
     }
+
+    console.log("Productos destacados:", result);
 
     return (
         <div className="max-w-6xl py-2 mx-auto sm:py-16 sm:px-24">
@@ -46,18 +52,24 @@ const FeaturedProducts = () => {
                             : "/path/to/default-image.jpg"; // Imagen por defecto si no hay imagen
                         const categoryName = category?.data?.attributes?.categoryName ?? "Sin categoría";
 
+                        console.log(`Producto: ${productName}, Imagen URL: ${imageUrl}`);
+
                         return (
                             <CarouselItem key={id} className="md:basis-1/2 lg:basis-1/3 group">
                                 <div className="p-1">
                                     <Card className="py-4 border-primary/30 shadow-none">
                                         <CardContent className="relative flex items-center justify-center px-6 py-2">
-                                            <Image 
-                                                src={imageUrl} 
-                                                alt={productName} 
-                                                width={270} 
-                                                height={270} 
-                                                className="rounded-lg"
-                                            />
+                                            {imageUrl ? (
+                                                <Image 
+                                                    src={imageUrl} 
+                                                    alt={productName} 
+                                                    width={270} 
+                                                    height={270} 
+                                                    className="rounded-lg"
+                                                />
+                                            ) : (
+                                                <p>Imagen no disponible</p>
+                                            )}
                                             <div className="absolute w-full px-6 transition duration-200 opacity-0 group-hover:opacity-100 bottom-5">
                                                 <div className="flex justify-center gap-x-6">
                                                     <IconButton 
