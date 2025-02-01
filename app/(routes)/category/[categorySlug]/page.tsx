@@ -25,7 +25,7 @@ export default function Page() {
     !loading
       ? filterEstilo === ""
         ? products
-        : products.filter((product: ProductType) => product.estilo === filterEstilo)
+        : products.filter((product: ProductType) => product.attributes.estilo === filterEstilo)
       : [];
 
   return (
@@ -33,7 +33,7 @@ export default function Page() {
       {/* Verifica si `result` no está vacío o si está cargando */}
       {!loading && products.length > 0 && (
         <h1 className="text-3xl font-medium text-primary">
-          Accesorio: {products[0]?.category?.categoryName || "Categoría Desconocida"}
+          Accesorio: {products[0]?.attributes?.category?.data?.attributes?.categoryName || "Categoría Desconocida"}
         </h1>
       )}
       <Separator />

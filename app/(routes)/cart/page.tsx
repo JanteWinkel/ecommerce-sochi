@@ -5,18 +5,19 @@ import { useCart } from "@/hooks/use-cart"
 import { formatPrice } from "@/lib/formatPrice"
 import CartItem from "./components/cart-item"
 
-
 export default function Page() {
   const { items, removeAll } = useCart()
 
-  const prices = items.map((product => product.price))
+  // Corregido: Acceder a los atributos del producto
+  const prices = items.map(product => product.attributes.price)
   const totalPrice = prices.reduce((total, price) => total + price, 0)
 
   const sendWhatsAppMessage = () => {
     const customerNumber = "+584141885117"
     const itemsMessage = items
-      .map(item => `- ${item.productName}: ${formatPrice(item.price)}`)
+      .map(item => `- ${item.attributes.productName}: ${formatPrice(item.attributes.price)}`)
       .join("\n")
+
     const message = `"¡Hola! Quisiera realizar un pedido con los siguientes productos. ¡Muchas gracias!" ♡\n
     Pedido:\n${itemsMessage}\n\nTotal: ${formatPrice(totalPrice)}`
 
@@ -24,15 +25,12 @@ export default function Page() {
     window.open(whatsappUrl, "_blank")
   }
 
-
   return (
     <div className="max-w-6xl px-4 py-16 mx-auto sm:px-6 lg:px-8">
       <h1 className="mb-5 text-3xl font-bold text-primary">Shopping Cart</h1>
       <div className="grid sm:grid-cols-2 sm:gap-5">
         <div>
-          {items.length == 0 && (
-            <p>No hay productos en el carrito</p>
-          )}
+          {items.length === 0 && <p>No hay productos en el carrito</p>}
           <ul>
             {items.map((item) => (
               <CartItem key={item.id} product={item} />
@@ -53,8 +51,8 @@ export default function Page() {
               Remover todo
             </Button>
           )}
-
         </div>
+
         {items.length > 0 && (
           <div className="max-w-xl gap-5 my-4">
             <div className="p-6 rounded-lg bg-rose-100">
