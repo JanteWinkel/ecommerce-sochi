@@ -17,7 +17,7 @@ const ChooseCategory = () => {
         return <p>No se encontraron categorías.</p>;
     }
 
-    console.log(result); // Ver los datos en consola para depuración
+    console.log(result);
 
     return (
         <div className='max-w-6xl py-4 mx-auto sm:py-16 sm:px-24'>
@@ -25,31 +25,29 @@ const ChooseCategory = () => {
 
             <div className='grid gap-5 sm:grid-cols-3'>
                 {result.map((category: CategoryType) => {
-                    const { id, attributes } = category;
-                    const { categoryName, slug, mainImage } = attributes;
-                    
-                    // Acceder correctamente a la URL de la imagen
-                    const imageUrl = mainImage?.data?.attributes?.url 
-                        ? `${process.env.NEXT_PUBLIC_BACKEND_URL}${mainImage.data.attributes.url}` 
+                    const imageUrl = category.attributes.mainImage?.data?.attributes?.url
+                        ? (category.attributes.mainImage.data.attributes.url.startsWith("http")
+                            ? category.attributes.mainImage.data.attributes.url
+                            : `${process.env.NEXT_PUBLIC_BACKEND_URL}${category.attributes.mainImage.data.attributes.url}`)
                         : null;
 
                     return (
                         <Link
-                            key={id}
-                            href={`/category/${slug}`}
+                            key={category.id}
+                            href={`/category/${category.attributes.slug}`}
                             className='relative max-w-xs mx-auto overflow-hidden bg-no-repeat bg-cover rounded-lg'
                         >
                             {imageUrl ? (
                                 <img 
                                     src={imageUrl} 
-                                    alt={categoryName} 
+                                    alt={category.attributes.categoryName} 
                                     className="max-w-[270px] transition duration-300 ease-in-out rounded-lg hover:scale-110"
                                 />
                             ) : (
                                 <p>Imagen no disponible</p>
                             )}
                             <p className="absolute w-full py-2 text-lg font-bold text-center text-black bottom-5 backdrop-blur-lg">
-                                {categoryName}
+                                {category.attributes.categoryName}
                             </p>
                         </Link>
                     );
