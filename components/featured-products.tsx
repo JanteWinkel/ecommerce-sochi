@@ -31,6 +31,7 @@ const FeaturedProducts = () => {
         return <p>No se encontraron productos destacados.</p>;
     }
 
+    console.log(result);
     return (
         <div className="max-w-6xl py-2 mx-auto sm:py-16 sm:px-24">
             <h3 className="px-6 text-3xl sm:pb-8 text-primary">Productos destacados</h3>
