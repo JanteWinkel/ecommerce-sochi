@@ -40,7 +40,9 @@ const FeaturedProducts = () => {
                         const { id, attributes } = product;
                         const { slug, productName, images, category, estilo } = attributes;
                         const imageUrl = images?.data?.[0]?.attributes?.url 
-                            ? `${process.env.NEXT_PUBLIC_BACKEND_URL}${images.data[0].attributes.url}` 
+                            ? (images.data[0].attributes.url.startsWith("http")
+                                ? images.data[0].attributes.url
+                                : `${process.env.NEXT_PUBLIC_BACKEND_URL}${images.data[0].attributes.url}`)
                             : "/path/to/default-image.jpg"; // Imagen por defecto si no hay imagen
                         const categoryName = category?.data?.attributes?.categoryName ?? "Sin categoría";
 
