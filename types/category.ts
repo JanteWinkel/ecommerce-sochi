@@ -3,9 +3,13 @@ export type CategoryType = {
     attributes: {
         categoryName: string;
         slug: string;
-        mainImage: {
-            id: number;
-            url: string;
-        }
-    }
-}
+        mainImage?: {
+            data?: {
+                id: number;
+                attributes: {
+                    url: string;
+                };
+            };
+        };
+    };
+};
