@@ -27,11 +27,16 @@ const LovedItemProduct = (props: LovedItemProductProps) => {
     const price = product.attributes.price;
     const estilo = product.attributes.estilo;
     const categoryName = product.attributes.category.data.attributes.categoryName;
-    const imageUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL}${product.attributes.images.data[0]?.attributes.url}`;
+    const imageUrl = product.attributes.images.data[0]?.attributes.url;
+
+    // Verifica si la URL es absoluta o relativa
+    const formattedImageUrl = imageUrl?.startsWith("http")
+        ? imageUrl
+        : `${process.env.NEXT_PUBLIC_BACKEND_URL}${imageUrl}`;
 
     return (
         <li className="flex py-6 border-b">
-            <ProductImageMiniature slug={product.attributes.slug} url={imageUrl} />
+            <ProductImageMiniature slug={product.attributes.slug} url={formattedImageUrl} />
             <div className="flex justify-between flex-1 px-6">
                 <div>
                     <h2 className="text-lg font-bold">{productName}</h2>

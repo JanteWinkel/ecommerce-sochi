@@ -12,18 +12,16 @@ export default function Page() {
             </h1>
 
             <div>
-                <div>
-                    {lovedItems.length == 0 && (
-                        <p> No hay productos en la sección de Me gusta </p>
-                    )}
+                {lovedItems.length === 0 ? (
+                    <p> No hay productos en la sección de Me gusta </p>
+                ) : (
                     <ul>
-                        {lovedItems.map((item)=> (
+                        {lovedItems.map((item) => (
                             <LovedItemProduct key={item.id} product={item} />
                         ))}
                     </ul>
+                )}
             </div>
         </div>
-
-        </div >
-    )
+    );
 }
