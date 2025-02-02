@@ -41,6 +41,7 @@ const FeaturedProducts = () => {
             <h3 className="px-6 text-3xl sm:pb-8 text-primary">Productos destacados</h3>
             <Carousel className="text-primary">
                 <CarouselContent className="-ml-2 md:-ml-4">
+                    
                     {result.map((product: ProductType) => {
                         const { id, attributes } = product;
                         const { slug, productName, images, category, estilo } = attributes;

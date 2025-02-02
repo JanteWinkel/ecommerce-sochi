@@ -1,23 +1,37 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
+import { useState, useEffect } from "react";
 import { ResponseType } from "@/types/response";
 import { useGetCategory } from "@/api/getProducts";
 import Link from "next/link";
 import { CategoryType } from "@/types/category";
+import SkeletonSchema from "./skeletonSchema";
 
 const ChooseCategory = () => {
     const { result, loading }: ResponseType = useGetCategory();
+    const [showSkeleton, setShowSkeleton] = useState(true);
 
-    if (loading) {
-        return <p>Cargando categorías...</p>;
+    useEffect(() => {
+        if (!loading) {
+            setTimeout(() => setShowSkeleton(false), 500); // Retraso para que se note el Skeleton
+        }
+    }, [loading]);
+
+    if (showSkeleton || loading) {
+        return (
+            <div className='max-w-6xl py-4 mx-auto sm:py-16 sm:px-24'>
+                <h3 className='px-6 pb-4 text-3xl sm:pb-8 text-primary'>Elige tu categoría favorita</h3>
+                <div className='grid gap-5 sm:grid-cols-3'>
+                    <SkeletonSchema grid={3} /> 
+                </div>
+            </div>
+        );
     }
 
     if (!result || !Array.isArray(result) || result.length === 0) {
         return <p>No se encontraron categorías.</p>;
     }
-
-   
 
     return (
         <div className='max-w-6xl py-4 mx-auto sm:py-16 sm:px-24'>
