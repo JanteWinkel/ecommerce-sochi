@@ -8,9 +8,7 @@ interface CarouselProductProps {
     }[];
 }
 
-const CarouselProduct = (props: CarouselProductProps) => {
-    const { images } = props;
-
+const CarouselProduct = ({ images }: CarouselProductProps) => {
     return (
         <div className="sm:px-16">
             <Carousel>
@@ -40,6 +38,6 @@ const CarouselProduct = (props: CarouselProductProps) => {
             </Carousel>
         </div>
     );
-}
+};
 
 export default CarouselProduct;
