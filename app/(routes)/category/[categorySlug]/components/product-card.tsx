@@ -24,7 +24,6 @@ const ProductCard = (props: ProductCardProps) => {
     const productName = product.attributes.productName;
     const price = product.attributes.price;
     const estilo = product.attributes.estilo;
-    const departamentoName = product.attributes.departamento?.data?.attributes?.departamentoName;
 
     return (
         <div className="relative p-2 transition-all duration-100 rounded-lg hover:shadow-md">
@@ -34,8 +33,7 @@ const ProductCard = (props: ProductCardProps) => {
                 {product.attributes.category.data.attributes.categoryName}</p> */}
                 <p className="px-2 py-1 text-xs text-white bg-primary rounded-full dark:bg-primary dark:text-black w-fit">
                     {estilo}</p>
-                <p className="px-2 py-1 text-xs text-white bg-primary rounded-full dark:bg-primary dark:text-black w-fit">
-                    {departamentoName}</p>
+                
             </div>
             <Carousel opts={{ align: "start" }} className="w-full max-w-sm">
                 <CarouselContent>
