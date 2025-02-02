@@ -34,7 +34,7 @@ const ProductCard = (props: ProductCardProps) => {
                 <p className="px-2 py-1 text-xs text-white bg-primary rounded-full dark:bg-primary dark:text-black w-fit">
                     {estilo}</p>
                 
-            </div>
+            </div> 
             <Carousel opts={{ align: "start" }} className="w-full max-w-sm">
                 <CarouselContent>
                     {images.map((image) => {

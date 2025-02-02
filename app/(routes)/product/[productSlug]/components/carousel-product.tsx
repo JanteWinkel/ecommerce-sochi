@@ -2,35 +2,37 @@
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 
 interface CarouselProductProps {
-    images: {
+    images?: {  // Hacemos que `images` sea opcional
         id: number;
-        url: string;
+        attributes: {
+            url: string;
+        };
     }[];
 }
 
-const CarouselProduct = ({ images }: CarouselProductProps) => {
+const CarouselProduct = ({ images = [] }: CarouselProductProps) => {
     return (
         <div className="sm:px-16">
             <Carousel>
                 <CarouselContent>
                     {images.length > 0 ? (
                         images.map((image) => {
-                            const imageUrl = image.url.startsWith("http")
-                                ? image.url
-                                : `${process.env.NEXT_PUBLIC_BACKEND_URL}${image.url}`;
+                            const imageUrl = image.attributes.url.startsWith("http")
+                                ? image.attributes.url
+                                : `${process.env.NEXT_PUBLIC_BACKEND_URL}${image.attributes.url}`;
 
                             return (
                                 <CarouselItem key={image.id}>
                                     <img
                                         src={imageUrl}
-                                        alt={`Product image ${image.id}`}
+                                        alt={`Imagen ${image.id}`}
                                         className="rounded-lg"
                                     />
                                 </CarouselItem>
                             );
                         })
                     ) : (
-                        <p>No hay imágenes disponibles</p>
+                        <p className="text-center text-gray-500">No hay imágenes disponibles</p>
                     )}
                 </CarouselContent>
                 <CarouselPrevious className="text-primary" />
