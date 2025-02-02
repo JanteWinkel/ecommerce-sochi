@@ -21,7 +21,12 @@ export function useGetProductBySlug(slug: string | string[]) {
           throw new Error("Error fetching data")
         }
         const json = await res.json()
-        setResult(json.data)
+        console.log(json) // Depuración
+        if (json && json.data) {
+          setResult(json.data)
+        } else {
+          setError("Unexpected API response format")
+        }
         setLoading(false)
       } catch (error) {
         if (error instanceof Error) {
