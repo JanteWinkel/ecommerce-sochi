@@ -25,7 +25,7 @@ const CarouselProduct = (props: CarouselProductProps) => {
                                 <CarouselItem key={image.id}>
                                     <img
                                         src={imageUrl}
-                                        alt="Product image"
+                                        alt={`Product image ${image.id}`}
                                         className="rounded-lg"
                                     />
                                 </CarouselItem>
