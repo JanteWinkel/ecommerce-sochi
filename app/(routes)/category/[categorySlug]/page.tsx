@@ -30,10 +30,11 @@ export default function Page() {
     <div className="max-w-6xl py-4 mx-auto sm:py-16 sm:px-24">
       {/* Verifica si `result` no está vacío o si está cargando */}
       {!loading && products.length > 0 && (
-        <h1 className="text-3xl font-medium text-primary">
-          Accesorio: {products[0]?.attributes.category?.data?.attributes.categoryName || "Categoría Desconocida"}
-        </h1>
-      )}
+  <h1 className="text-3xl font-medium text-primary ml-4">
+    Accesorio: {products[0]?.attributes.category?.data?.attributes.categoryName || "Categoría Desconocida"}
+  </h1>
+)}
+
       <Separator />
 
       <div className="sm:flex sm:justify-between">

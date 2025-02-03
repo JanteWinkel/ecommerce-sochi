@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useGetProductBySlug } from "@/api/getProductBySlug"
 import { ResponseType } from "@/types/response"
@@ -10,7 +10,7 @@ import InfoProduct from "./components/info-product"
 
 export default function Page() {
     const params = useParams();
-    const productSlug = params?.productSlug as string; // Asegurar que es una cadena
+    const productSlug = params?.productSlug as string;
 
     // Verificar si `productSlug` existe antes de hacer la petición
     const { result, loading }: ResponseType = useGetProductBySlug(productSlug || "");
@@ -29,7 +29,7 @@ export default function Page() {
     return (
         <div className="max-w-6xl py-4 mx-auto sm:py-32 sm:px-24">
             <div className="grid sm:grid-cols-2 gap-6">
-                <div>
+                <div className="sm:w-full md:w-3/4 lg:w-full mx-auto">
                     <CarouselProduct images={product.attributes.images?.data ?? []} />
                 </div>
                 <div className="sm:px-12">
