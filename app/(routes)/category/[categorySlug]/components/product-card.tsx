@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import { Expand, ShoppingCart } from "lucide-react";
-import Link from "next/link";
+
 import { useRouter } from "next/navigation";
 
 import { formatPrice } from "@/lib/formatPrice";
@@ -45,13 +45,13 @@ const ProductCard = (props: ProductCardProps) => {
                         return (
                             <CarouselItem key={image.id} className="group">
                                 <div>
-                                    <Link href={`/product/${product.attributes.slug}`}>
+                                    
                                         <img
                                             src={imageUrl}
                                             alt={productName}
                                             className="rounded-xl"
                                         />
-                                    </Link>
+                                    
                                 </div>
                                 <div className="absolute w-full px-6 transition duration-200 opacity-0 group-hover:opacity-100 bottom-5">
                                     <div className="flex justify-center gap-x-6">
