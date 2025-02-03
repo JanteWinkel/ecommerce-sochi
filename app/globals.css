@@ -75,3 +75,20 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Añade este código CSS a tu archivo de estilos */
+
+.toast-container {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 1000;
+}
+
+@media (max-width: 768px) {
+  .toast-container {
+    top: auto;
+    bottom: 1rem;
+    right: 1rem;
+  }
+}
