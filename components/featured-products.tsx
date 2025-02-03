@@ -18,11 +18,11 @@ const FeaturedProducts = () => {
     const { result, loading, error }: ResponseType = useGetFeaturedProducts();
     const router = useRouter();
     const { addItem } = useCart();
-    console.log(result)
+    console.log(result);
 
     if (loading) {
         return (
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px' }}>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 <SkeletonSchema grid={3} />
             </div>
         );
@@ -41,11 +41,10 @@ const FeaturedProducts = () => {
             <h3 className="px-6 text-3xl sm:pb-8 text-primary">Productos destacados</h3>
             <Carousel className="text-primary">
                 <CarouselContent className="-ml-2 md:-ml-4">
-                    
                     {result.map((product: ProductType) => {
                         const { id, attributes } = product;
                         const { slug, productName, images, category, estilo } = attributes;
-                        const imageUrl = images?.data?.[0]?.attributes?.url 
+                        const imageUrl = images?.data?.[0]?.attributes?.url
                             ? (images.data[0].attributes.url.startsWith("http")
                                 ? images.data[0].attributes.url
                                 : `${process.env.NEXT_PUBLIC_BACKEND_URL}${images.data[0].attributes.url}`)
