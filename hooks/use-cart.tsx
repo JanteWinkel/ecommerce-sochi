@@ -1,7 +1,9 @@
 import { create } from 'zustand'
 import { persist, createJSONStorage } from 'zustand/middleware'
-import { toast as showToast } from './use-toast'
+
+import { toast } from './use-toast'
 import { ProductType } from "@/types/product"
+
 
 interface CartStore {
     items: ProductType[],
@@ -24,37 +26,25 @@ export const useCart = create(persist<CartStore>((set, get) => ({
         set({
             items: [...get().items, data]
         })
-        showToast({
-            title: "Producto añadido al carrito 🛍️",
-            style: {
-                position: 'fixed',
-                top: '50%',
-                left: '50%',
-                transform: 'translate(-50%, -50%)',
-                zIndex: 9999,
-            }
+        toast({
+            title:"Producto añadido al carrito 🛍️"
         })
-    },
+  },
     removeItem: (id: number) => {
-        const currentItems = get().items
-        const indexToRemove = currentItems.findIndex((item) => item.id === id)
-
+        const currentItems = get().items;
+        const indexToRemove = currentItems.findIndex((item) => item.id === id);
+        
         if (indexToRemove !== -1) {
-            set({ items: [...currentItems.slice(0, indexToRemove), ...currentItems.slice(indexToRemove + 1)] })
-            showToast({
-                title: "Producto eliminado del carrito🗑️",
-                style: {
-                    position: 'fixed',
-                    top: '50%',
-                    left: '50%',
-                    transform: 'translate(-50%, -50%)',
-                    zIndex: 9999,
-                }
-            })
+            set({ items: [...currentItems.slice(0, indexToRemove), ...currentItems.slice(indexToRemove + 1)] });
+            toast({
+                title: "Producto eliminado del carrito🗑️"
+            });
         }
     },
-    removeAll: () => set({ items: [] })
-}), {
+    
+    removeAll: () => set({items: []})
+
+  }), {
     name: "cart-storage",
     storage: createJSONStorage(() => localStorage)
-}))
+  })) 
