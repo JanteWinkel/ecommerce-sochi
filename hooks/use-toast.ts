@@ -16,6 +16,7 @@ type ToasterToast = ToastProps & {
   title?: React.ReactNode
   description?: React.ReactNode
   action?: ToastActionElement
+  style?: React.CSSProperties
 }
 
 const ACTION_TYPES = {
@@ -148,6 +149,25 @@ function toast({ ...props }: Toast) {
     })
   const dismiss = () => dispatch({ type: ACTION_TYPES.DISMISS_TOAST, toastId: id })
 
+  const style: React.CSSProperties = {
+    position: 'fixed',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    zIndex: 9999,
+    ...props.style,
+  }
+
+  // Media Queries
+  if (typeof window !== 'undefined') {
+    const mediaQuery = window.matchMedia('(max-width: 768px)')
+    if (mediaQuery.matches) {
+      style.top = '50%'
+      style.left = '50%'
+      style.transform = 'translate(-50%, -50%)'
+    }
+  }
+
   dispatch({
     type: ACTION_TYPES.ADD_TOAST,
     toast: {
@@ -157,14 +177,7 @@ function toast({ ...props }: Toast) {
       onOpenChange: (open) => {
         if (!open) dismiss()
       },
-      style: {
-        position: 'fixed',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        zIndex: 9999,
-        ...props.style,
-      },
+      style,
     },
   })
 
