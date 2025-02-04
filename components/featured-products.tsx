@@ -71,7 +71,10 @@ const FeaturedProducts = () => {
                                                 height={270} 
                                                 className={`rounded-lg ${!imageLoaded[id] ? "hidden" : ""}`}
                                                 onLoad={() => setImageLoaded((prev) => ({ ...prev, [id]: true }))} // Marcar la imagen como cargada
-                                                onError={() => setImageLoaded((prev) => ({ ...prev, [id]: true }))} // Manejar errores de carga
+                                                onError={() => {
+                                                    console.error(`Error al cargar la imagen: ${imageUrl}`);
+                                                    setImageLoaded((prev) => ({ ...prev, [id]: true })); // Marcar como cargada incluso si hay error
+                                                }}
                                             />
                                             {/* Botones de acción */}
                                             <div className="absolute w-full px-6 transition duration-200 opacity-0 group-hover:opacity-100 bottom-5">
