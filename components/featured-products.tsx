@@ -13,12 +13,13 @@ import IconButton from "./ui/icon-button";
 import { useCart } from "@/hooks/use-cart";
 import ProductCategoryEstilo from "./shared/product-category-estilo";
 import Image from "next/image";
+import { useState } from "react"; // Importar useState para manejar el estado de carga de la imagen
 
 const FeaturedProducts = () => {
     const { result, loading, error }: ResponseType = useGetFeaturedProducts();
     const router = useRouter();
     const { addItem } = useCart();
-    console.log(result);
+    const [imageLoaded, setImageLoaded] = useState<{ [key: string]: boolean }>({}); // Estado para manejar la carga de cada imagen
 
     if (loading) {
         return (
@@ -56,13 +57,23 @@ const FeaturedProducts = () => {
                                 <div className="p-1">
                                     <Card className="py-4 border-primary/30 shadow-none">
                                         <CardContent className="relative flex items-center justify-center px-6 py-2">
+                                            {/* Mostrar el SkeletonSchema mientras la imagen se carga */}
+                                            {!imageLoaded[id] && (
+                                                <div className="w-[270px] h-[270px]">
+                                                    <SkeletonSchema grid={1} />
+                                                </div>
+                                            )}
+                                            {/* Imagen del producto */}
                                             <Image 
                                                 src={imageUrl} 
                                                 alt={productName} 
                                                 width={270} 
                                                 height={270} 
-                                                className="rounded-lg"
+                                                className={`rounded-lg ${!imageLoaded[id] ? "hidden" : ""}`}
+                                                onLoad={() => setImageLoaded((prev) => ({ ...prev, [id]: true }))} // Marcar la imagen como cargada
+                                                onError={() => setImageLoaded((prev) => ({ ...prev, [id]: true }))} // Manejar errores de carga
                                             />
+                                            {/* Botones de acción */}
                                             <div className="absolute w-full px-6 transition duration-200 opacity-0 group-hover:opacity-100 bottom-5">
                                                 <div className="flex justify-center gap-x-6">
                                                     <IconButton 
@@ -76,6 +87,7 @@ const FeaturedProducts = () => {
                                                 </div>
                                             </div>
                                         </CardContent>
+                                        {/* Información del producto */}
                                         <div className="flex justify-between gap-4 px-8">
                                             <h3 className="text-lg font-bold">{productName}</h3>
                                         </div>
